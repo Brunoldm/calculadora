@@ -13,14 +13,14 @@ class Button extends StatelessWidget {
   Button({
     required this.text,
     this.big = false,
-    this.color = DEFAULT,
+    this.color = DARK,
     required this.cb,
 });
 
-Button.big({
+  Button.big({
     required this.text,
-    this.big = false,
-    this.color = DEFAULT,
+    this.big = true,
+    this.color = DARK,
     required this.cb,
 });
 
@@ -41,7 +41,7 @@ Button.big({
           backgroundColor: this.color,
           fixedSize: Size(80, 80),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(10),
           )
         ),
         child: Text (

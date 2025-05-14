@@ -3,7 +3,7 @@ class Memoria {
 
   final _buffer = [0.0, 0.0];
   int _bufferIndex = 0;
-  String? _operation='';
+  String? _operation;
   String _value = '0';
   bool _wipeValue = false;
   String _lastCommand = '';
@@ -13,9 +13,11 @@ class Memoria {
       _operation = command;
       return;
     }
-
     if(command == 'C'){
       _allclear();
+    } else if (command == '<-') {
+    _deleteLastDigit();
+
     } else if(operations.contains(command)){
       _setOperation(command);
     } else{
@@ -24,14 +26,15 @@ class Memoria {
 
   _lastCommand = command;
 }
-
-  _isReplacingOperation(String command){
+    //Verificar se o usuario trocou de operação
+    _isReplacingOperation(String command){
     return operations.contains(_lastCommand)
     && operations.contains(command)
     && _lastCommand != '='
     && command != '=';
   }
 
+  //Definição da operação e o calculo
   _setOperation(String newOperation){
     bool isEqualSign = newOperation == '=';
     if(_bufferIndex == 0){
@@ -48,9 +51,10 @@ class Memoria {
       _bufferIndex = isEqualSign ? 0 : 1;
     }
 
-      _wipeValue = true; //!isEqualSign;
+      _wipeValue = true; 
   }
 
+   // Adiciona um novo dígito ou ponto decimal ao número atual
   _addDigit(String digit){
 
     final isDot = digit == '.';
@@ -68,6 +72,7 @@ class Memoria {
     _buffer[_bufferIndex] = double.tryParse(_value) ?? 0;
   }
 
+  //apagar tudo
   _allclear(){
     _value = '0';
     _buffer.setAll(0, [0.0,0.0]);
@@ -76,9 +81,21 @@ class Memoria {
     _wipeValue = false;
   }
 
+  //apagar o ultimo numero digitado
+  void _deleteLastDigit() {
+  if (_wipeValue || _value.length <= 1) {
+    _value = '0';
+  } else {
+    _value = _value.substring(0, _value.length - 1);
+  }
+
+  _buffer[_bufferIndex] = double.tryParse(_value) ?? 0;
+}
+
+  //Realizar calculo conforme operação
   _calculate(){
     switch(_operation){
-      case '%': return _buffer[0] % _buffer[1];
+      case '%': return _buffer[0] * _buffer[1] / 100;
       case '/': return _buffer[0] / _buffer[1];
       case 'x': return _buffer[0] * _buffer[1];
       case '-': return _buffer[0] - _buffer[1];
