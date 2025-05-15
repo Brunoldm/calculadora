@@ -19,6 +19,7 @@ class _CalculadoraState extends State<Calculadora> {
     });
   }
 
+  //Evitar giro da calculadora conforme a tela
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

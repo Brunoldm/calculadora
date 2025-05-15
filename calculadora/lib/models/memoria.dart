@@ -26,7 +26,7 @@ class Memoria {
 
   _lastCommand = command;
 }
-    //Verificar se o usuario trocou de operação
+    //verificar se o usuario trocou de operação
     _isReplacingOperation(String command){
     return operations.contains(_lastCommand)
     && operations.contains(command)
@@ -34,7 +34,7 @@ class Memoria {
     && command != '=';
   }
 
-  //Definição da operação e o calculo
+  //definição da operação e o calculo
   _setOperation(String newOperation){
     bool isEqualSign = newOperation == '=';
     if(_bufferIndex == 0){
@@ -54,7 +54,7 @@ class Memoria {
       _wipeValue = true; 
   }
 
-   // Adiciona um novo dígito ou ponto decimal ao número atual
+   //adiciona um novo dígito ou ponto decimal ao número atual
   _addDigit(String digit){
 
     final isDot = digit == '.';
